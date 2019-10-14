@@ -42,6 +42,37 @@ public class CacheConfiguration {
             createCache(cm, com.smoreno.easyorderbackend.domain.User.class.getName());
             createCache(cm, com.smoreno.easyorderbackend.domain.Authority.class.getName());
             createCache(cm, com.smoreno.easyorderbackend.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.smoreno.easyorderbackend.domain.ItemPedido.class.getName());
+            createCache(cm, com.smoreno.easyorderbackend.domain.ItemPedido.class.getName() + ".tipoItemPedidos");
+            createCache(cm, com.smoreno.easyorderbackend.domain.ItemPedido.class.getName() + ".tipoCocinas");
+            createCache(cm, com.smoreno.easyorderbackend.domain.ItemPedido.class.getName() + ".ingredientes");
+            createCache(cm, com.smoreno.easyorderbackend.domain.ItemPedido.class.getName() + ".menus");
+            createCache(cm, com.smoreno.easyorderbackend.domain.ItemPedido.class.getName() + ".valoracions");
+            createCache(cm, com.smoreno.easyorderbackend.domain.ItemPedido.class.getName() + ".statuses");
+            createCache(cm, com.smoreno.easyorderbackend.domain.ItemPedido.class.getName() + ".pedidos");
+            createCache(cm, com.smoreno.easyorderbackend.domain.Pedido.class.getName());
+            createCache(cm, com.smoreno.easyorderbackend.domain.Pedido.class.getName() + ".menus");
+            createCache(cm, com.smoreno.easyorderbackend.domain.Pedido.class.getName() + ".itemPedidos");
+            createCache(cm, com.smoreno.easyorderbackend.domain.Pedido.class.getName() + ".valoracions");
+            createCache(cm, com.smoreno.easyorderbackend.domain.Pedido.class.getName() + ".pagos");
+            createCache(cm, com.smoreno.easyorderbackend.domain.Pedido.class.getName() + ".statuses");
+            createCache(cm, com.smoreno.easyorderbackend.domain.Ingrediente.class.getName());
+            createCache(cm, com.smoreno.easyorderbackend.domain.Ingrediente.class.getName() + ".items");
+            createCache(cm, com.smoreno.easyorderbackend.domain.Mesa.class.getName());
+            createCache(cm, com.smoreno.easyorderbackend.domain.Mesa.class.getName() + ".pedidos");
+            createCache(cm, com.smoreno.easyorderbackend.domain.Valoracion.class.getName());
+            createCache(cm, com.smoreno.easyorderbackend.domain.TipoCocina.class.getName());
+            createCache(cm, com.smoreno.easyorderbackend.domain.TipoCocina.class.getName() + ".items");
+            createCache(cm, com.smoreno.easyorderbackend.domain.PagoPedido.class.getName());
+            createCache(cm, com.smoreno.easyorderbackend.domain.TipoItemPedido.class.getName());
+            createCache(cm, com.smoreno.easyorderbackend.domain.TipoItemPedido.class.getName() + ".items");
+            createCache(cm, com.smoreno.easyorderbackend.domain.Menu.class.getName());
+            createCache(cm, com.smoreno.easyorderbackend.domain.Menu.class.getName() + ".items");
+            createCache(cm, com.smoreno.easyorderbackend.domain.Menu.class.getName() + ".pedidos");
+            createCache(cm, com.smoreno.easyorderbackend.domain.StatusItemPedido.class.getName());
+            createCache(cm, com.smoreno.easyorderbackend.domain.Comensal.class.getName());
+            createCache(cm, com.smoreno.easyorderbackend.domain.Comensal.class.getName() + ".valoracions");
+            createCache(cm, com.smoreno.easyorderbackend.domain.Comensal.class.getName() + ".pagos");
             // jhipster-needle-ehcache-add-entry
         };
     }

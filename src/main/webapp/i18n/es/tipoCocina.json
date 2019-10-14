@@ -1,0 +1,23 @@
+{
+  "easyorderBackendApp": {
+    "tipoCocina": {
+      "home": {
+        "title": "Tipo Cocinas",
+        "createLabel": "Crear nuevo Tipo Cocina",
+        "createOrEditLabel": "Crear o editar Tipo Cocina",
+        "notFound": "No Tipo Cocinas found"
+      },
+      "created": "Un nuevo Tipo Cocina ha sido creado con el identificador {{ param }}",
+      "updated": "Un Tipo Cocina ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Tipo Cocina ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Tipo Cocina {{ id }}?"
+      },
+      "detail": {
+        "title": "Tipo Cocina"
+      },
+      "nombre": "Nombre",
+      "item": "Item"
+    }
+  }
+}

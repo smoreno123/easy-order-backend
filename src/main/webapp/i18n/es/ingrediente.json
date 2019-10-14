@@ -1,0 +1,26 @@
+{
+  "easyorderBackendApp": {
+    "ingrediente": {
+      "home": {
+        "title": "Ingredientes",
+        "createLabel": "Crear nuevo Ingrediente",
+        "createOrEditLabel": "Crear o editar Ingrediente",
+        "notFound": "No Ingredientes found"
+      },
+      "created": "Un nuevo Ingrediente ha sido creado con el identificador {{ param }}",
+      "updated": "Un Ingrediente ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Ingrediente ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Ingrediente {{ id }}?"
+      },
+      "detail": {
+        "title": "Ingrediente"
+      },
+      "nombre": "Nombre",
+      "vegetariano": "Vegetariano",
+      "vegano": "Vegano",
+      "kcal": "Kcal",
+      "item": "Item"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "easyorderBackendApp": {
+    "tipoItemPedido": {
+      "home": {
+        "title": "Tipo Item Pedidos",
+        "createLabel": "Crear nuevo Tipo Item Pedido",
+        "createOrEditLabel": "Crear o editar Tipo Item Pedido",
+        "notFound": "No Tipo Item Pedidos found"
+      },
+      "created": "Un nuevo Tipo Item Pedido ha sido creado con el identificador {{ param }}",
+      "updated": "Un Tipo Item Pedido ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Tipo Item Pedido ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Tipo Item Pedido {{ id }}?"
+      },
+      "detail": {
+        "title": "Tipo Item Pedido"
+      },
+      "nombreTipo": "Nombre Tipo",
+      "item": "Item"
+    }
+  }
+}
