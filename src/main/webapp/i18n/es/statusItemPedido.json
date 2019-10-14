@@ -1,0 +1,26 @@
+{
+  "easyorderBackendApp": {
+    "statusItemPedido": {
+      "home": {
+        "title": "Status Item Pedidos",
+        "createLabel": "Crear nuevo Status Item Pedido",
+        "createOrEditLabel": "Crear o editar Status Item Pedido",
+        "notFound": "No Status Item Pedidos found"
+      },
+      "created": "Un nuevo Status Item Pedido ha sido creado con el identificador {{ param }}",
+      "updated": "Un Status Item Pedido ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Status Item Pedido ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Status Item Pedido {{ id }}?"
+      },
+      "detail": {
+        "title": "Status Item Pedido"
+      },
+      "preparado": "Preparado",
+      "horaInicio": "Hora Inicio",
+      "horaFinalizacion": "Hora Finalizacion",
+      "pedido": "Pedido",
+      "itemPedido": "Item Pedido"
+    }
+  }
+}

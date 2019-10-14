@@ -1,0 +1,26 @@
+{
+  "easyorderBackendApp": {
+    "comensal": {
+      "home": {
+        "title": "Comensals",
+        "createLabel": "Crear nuevo Comensal",
+        "createOrEditLabel": "Crear o editar Comensal",
+        "notFound": "No Comensals found"
+      },
+      "created": "Un nuevo Comensal ha sido creado con el identificador {{ param }}",
+      "updated": "Un Comensal ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Comensal ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Comensal {{ id }}?"
+      },
+      "detail": {
+        "title": "Comensal"
+      },
+      "dni": "Dni",
+      "nombre": "Nombre",
+      "usuario": "Usuario",
+      "valoracion": "Valoracion",
+      "pago": "Pago"
+    }
+  }
+}
