@@ -8,7 +8,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -53,7 +55,7 @@ public class Pedido implements Serializable {
     @JoinTable(name = "pedido_item_pedido",
                joinColumns = @JoinColumn(name = "pedido_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "item_pedido_id", referencedColumnName = "id"))
-    private Set<ItemPedido> itemPedidos = new HashSet<>();
+    private List<ItemPedido> itemPedidos = new ArrayList<>();
 
     @OneToMany(mappedBy = "pedido")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -166,11 +168,11 @@ public class Pedido implements Serializable {
         this.menus = menus;
     }
 
-    public Set<ItemPedido> getItemPedidos() {
+    public List<ItemPedido> getItemPedidos() {
         return itemPedidos;
     }
 
-    public Pedido itemPedidos(Set<ItemPedido> itemPedidos) {
+    public Pedido itemPedidos(List<ItemPedido> itemPedidos) {
         this.itemPedidos = itemPedidos;
         return this;
     }
@@ -187,7 +189,7 @@ public class Pedido implements Serializable {
         return this;
     }
 
-    public void setItemPedidos(Set<ItemPedido> itemPedidos) {
+    public void setItemPedidos(List<ItemPedido> itemPedidos) {
         this.itemPedidos = itemPedidos;
     }
 

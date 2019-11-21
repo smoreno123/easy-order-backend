@@ -9,12 +9,16 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -115,4 +119,53 @@ public class ItemPedidoResource {
         itemPedidoRepository.deleteById(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
+
+
+    //Funcion obtener todos los items pedido
+    @GetMapping("/item-pedidos/all")
+    @Transactional
+    public List<ItemPedido> getAllItemPedidos() {
+        List<ItemPedido> itemPedidoList = new ArrayList<>();
+
+        itemPedidoList = itemPedidoRepository.findAllItemPedido();
+
+        return itemPedidoList;
+    }
+
+    //Funcion obtener itemspPedido por nombre (contains)
+    @GetMapping("/item-pedidos/by-name/{nombreParam}")
+    public List<ItemPedido> finItemsByName(@PathVariable String nombreParam) {
+        List<ItemPedido> itemPedidoList;
+
+        itemPedidoList = itemPedidoRepository.findByNombre(nombreParam);
+
+        return itemPedidoList;
+    }
+
+    //Obtener Items del menu de un dia concreto
+    // IMPORTANTE!!!! Ejemplo de fecha para probar la query: 2019-10-07T00:00:00+00:00
+    @GetMapping("/item-pedidos/by-date")
+    @Transactional
+    public List<ItemPedido> findMenuByDate(@RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime startDate) {
+        List<ItemPedido> itemPedidoList;
+
+        itemPedidoList = itemPedidoRepository.findByMenu(startDate);
+
+        return itemPedidoList;
+
+    }
+
+    //Obtener items de pedido por tipo (bebida, comida, primer plato...)
+    @GetMapping("/item-pedidos/by-type")
+    public List<ItemPedido> findByType(@RequestParam("tipoParam") String tipoParam) {
+        List<ItemPedido> itemPedidoList;
+
+        //TipoItemPedido tipoItemPedido = new TipoItemPedido();
+        //tipoItemPedido.setNombreTipo(tipoParam);
+        itemPedidoList = itemPedidoRepository.findByTipoItemPedidos(tipoParam);
+
+        return itemPedidoList;
+
+    }
+
 }

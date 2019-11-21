@@ -1,5 +1,6 @@
 package com.smoreno.easyorderbackend.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -57,7 +58,7 @@ public class ItemPedido implements Serializable {
                inverseJoinColumns = @JoinColumn(name = "ingrediente_id", referencedColumnName = "id"))
     private Set<Ingrediente> ingredientes = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "item_pedido_menu",
                joinColumns = @JoinColumn(name = "item_pedido_id", referencedColumnName = "id"),

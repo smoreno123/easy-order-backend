@@ -58,8 +58,8 @@
             </column>
         </createTable>
 
-        <addPrimaryKey columnNames="pedido_id, item_pedido_id" tableName="pedido_item_pedido"/>
-        
+        <!--<addPrimaryKey columnNames="pedido_id, item_pedido_id" tableName="pedido_item_pedido"/>-->
+
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 

@@ -1,6 +1,8 @@
 package com.smoreno.easyorderbackend.web.rest;
 
+import com.smoreno.easyorderbackend.domain.Menu;
 import com.smoreno.easyorderbackend.domain.Pedido;
+import com.smoreno.easyorderbackend.repository.MenuRepository;
 import com.smoreno.easyorderbackend.repository.PedidoRepository;
 import com.smoreno.easyorderbackend.web.rest.errors.BadRequestAlertException;
 
@@ -8,10 +10,15 @@ import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.bind.annotation.XmlType;
+import java.io.Serializable;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -34,6 +41,7 @@ public class PedidoResource {
 
     private final PedidoRepository pedidoRepository;
 
+
     public PedidoResource(PedidoRepository pedidoRepository) {
         this.pedidoRepository = pedidoRepository;
     }
@@ -46,7 +54,14 @@ public class PedidoResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/pedidos")
+    @Transactional
     public ResponseEntity<Pedido> createPedido(@RequestBody Pedido pedido) throws URISyntaxException {
+        //establecemos el menu del pedido a traves de la fecha en la que se ha realizado, siempre que no haya ningun menu puesto
+        /*if (pedido.getMenus().size()==0){
+            pedido.setMenus(menuRepository.findByFechaInicioBeforeAndFechaFinalAfter(pedido.getFechaPedido(), pedido.getFechaPedido()));
+        }*/
+
+        pedido.setMesa(null);
         log.debug("REST request to save Pedido : {}", pedido);
         if (pedido.getId() != null) {
             throw new BadRequestAlertException("A new pedido cannot already have an ID", ENTITY_NAME, "idexists");
