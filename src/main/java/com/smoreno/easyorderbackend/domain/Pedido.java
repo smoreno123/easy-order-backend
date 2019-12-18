@@ -43,6 +43,9 @@ public class Pedido implements Serializable {
     @JsonIgnoreProperties("pedidos")
     private Mesa mesa;
 
+    @Column(name = "es_menu")
+    private Boolean esMenu;
+
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "pedido_menu",
@@ -85,6 +88,14 @@ public class Pedido implements Serializable {
     public Pedido numPedido(Integer numPedido) {
         this.numPedido = numPedido;
         return this;
+    }
+
+    public Boolean getEsMenu() {
+        return esMenu;
+    }
+
+    public void setEsMenu(Boolean esMenu) {
+        this.esMenu = esMenu;
     }
 
     public void setNumPedido(Integer numPedido) {

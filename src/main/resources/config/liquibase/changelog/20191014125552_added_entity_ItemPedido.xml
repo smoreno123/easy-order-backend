@@ -19,6 +19,9 @@
             <column name="nombre" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+            <column name="imagen" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
             <column name="descripcion" type="varchar(255)">
                 <constraints nullable="true" />
             </column>

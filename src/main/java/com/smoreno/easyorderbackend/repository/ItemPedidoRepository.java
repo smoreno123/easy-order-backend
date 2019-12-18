@@ -45,4 +45,5 @@ public interface ItemPedidoRepository extends JpaRepository<ItemPedido, Long> {
     //Obtener items de pedido por tipo (bebida, comida, primer plato...)
     @Query("select itemPedido from ItemPedido itemPedido join itemPedido.tipoItemPedidos tipoJoin where tipoJoin.nombreTipo like :tipoParam")
     List<ItemPedido>findByTipoItemPedidos(@Param("tipoParam")String tipoParam);
+
 }

@@ -1,5 +1,6 @@
 package com.smoreno.easyorderbackend.web.rest;
 
+import com.smoreno.easyorderbackend.domain.ItemPedido;
 import com.smoreno.easyorderbackend.domain.Menu;
 import com.smoreno.easyorderbackend.domain.Pedido;
 import com.smoreno.easyorderbackend.repository.MenuRepository;
@@ -8,6 +9,7 @@ import com.smoreno.easyorderbackend.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.models.auth.In;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +24,7 @@ import java.io.Serializable;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * REST controller for managing {@link com.smoreno.easyorderbackend.domain.Pedido}.
@@ -40,10 +41,12 @@ public class PedidoResource {
     private String applicationName;
 
     private final PedidoRepository pedidoRepository;
+    private final MenuRepository menuRepository;
 
 
-    public PedidoResource(PedidoRepository pedidoRepository) {
+    public PedidoResource(PedidoRepository pedidoRepository, MenuRepository menuRepository) {
         this.pedidoRepository = pedidoRepository;
+        this.menuRepository = menuRepository;
     }
 
     /**
@@ -57,9 +60,9 @@ public class PedidoResource {
     @Transactional
     public ResponseEntity<Pedido> createPedido(@RequestBody Pedido pedido) throws URISyntaxException {
         //establecemos el menu del pedido a traves de la fecha en la que se ha realizado, siempre que no haya ningun menu puesto
-        /*if (pedido.getMenus().size()==0){
+        if (pedido.getMenus().size()==0){
             pedido.setMenus(menuRepository.findByFechaInicioBeforeAndFechaFinalAfter(pedido.getFechaPedido(), pedido.getFechaPedido()));
-        }*/
+        }
 
         pedido.setMesa(null);
         log.debug("REST request to save Pedido : {}", pedido);
@@ -129,5 +132,14 @@ public class PedidoResource {
         log.debug("REST request to delete Pedido : {}", id);
         pedidoRepository.deleteById(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+    }
+
+    @GetMapping("pedidos/masPedido")
+    public ItemPedido getMasPedido(){
+        List<ItemPedido> itemPedido = pedidoRepository.findByMasPedido();
+
+
+
+        return itemPedido.get(0);
     }
 }

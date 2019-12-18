@@ -2,6 +2,7 @@ package com.smoreno.easyorderbackend.web.rest;
 
 import com.smoreno.easyorderbackend.EasyorderBackendApp;
 import com.smoreno.easyorderbackend.domain.Pedido;
+import com.smoreno.easyorderbackend.repository.MenuRepository;
 import com.smoreno.easyorderbackend.repository.PedidoRepository;
 import com.smoreno.easyorderbackend.web.rest.errors.ExceptionTranslator;
 
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -57,10 +59,18 @@ public class PedidoResourceIT {
     private static final String UPDATED_OBSERVACIONES_PRECIO = "BBBBBBBBBB";
 
     @Autowired
+    @Qualifier("pedidoRepository")
     private PedidoRepository pedidoRepository;
 
     @Mock
     private PedidoRepository pedidoRepositoryMock;
+
+    @Autowired
+    @Qualifier("menuRepository")
+    private MenuRepository menuRepository;
+
+    @Mock
+    private MenuRepository menuRepositoryMock;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -75,6 +85,7 @@ public class PedidoResourceIT {
     private EntityManager em;
 
     @Autowired
+    @Qualifier("mvcValidator")
     private Validator validator;
 
     private MockMvc restPedidoMockMvc;
@@ -84,7 +95,7 @@ public class PedidoResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final PedidoResource pedidoResource = new PedidoResource(pedidoRepository);
+        final PedidoResource pedidoResource = new PedidoResource(pedidoRepository, menuRepository);
         this.restPedidoMockMvc = MockMvcBuilders.standaloneSetup(pedidoResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -187,7 +198,7 @@ public class PedidoResourceIT {
     
     @SuppressWarnings({"unchecked"})
     public void getAllPedidosWithEagerRelationshipsIsEnabled() throws Exception {
-        PedidoResource pedidoResource = new PedidoResource(pedidoRepositoryMock);
+        PedidoResource pedidoResource = new PedidoResource(pedidoRepositoryMock, menuRepository);
         when(pedidoRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         MockMvc restPedidoMockMvc = MockMvcBuilders.standaloneSetup(pedidoResource)
@@ -204,7 +215,7 @@ public class PedidoResourceIT {
 
     @SuppressWarnings({"unchecked"})
     public void getAllPedidosWithEagerRelationshipsIsNotEnabled() throws Exception {
-        PedidoResource pedidoResource = new PedidoResource(pedidoRepositoryMock);
+        PedidoResource pedidoResource = new PedidoResource(pedidoRepositoryMock, menuRepositoryMock);
             when(pedidoRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
             MockMvc restPedidoMockMvc = MockMvcBuilders.standaloneSetup(pedidoResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)

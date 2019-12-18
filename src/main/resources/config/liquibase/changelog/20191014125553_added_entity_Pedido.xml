@@ -19,6 +19,9 @@
             <column name="num_pedido" type="integer">
                 <constraints nullable="true" />
             </column>
+            <column name="es_menu" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="true" />
+            </column>
             <column name="fecha_pedido" type="datetime">
                 <constraints nullable="true" />
             </column>

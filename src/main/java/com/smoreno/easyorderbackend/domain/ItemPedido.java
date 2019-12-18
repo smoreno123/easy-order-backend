@@ -31,6 +31,9 @@ public class ItemPedido implements Serializable {
     @Column(name = "descripcion")
     private String descripcion;
 
+    @Column(name = "imagen")
+    private String imagen;
+
     @Column(name = "precio", precision = 21, scale = 2)
     private BigDecimal precio;
 
@@ -98,6 +101,14 @@ public class ItemPedido implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
     public String getDescripcion() {
