@@ -142,4 +142,10 @@ public class PedidoResource {
 
         return itemPedido.get(0);
     }
+
+    //Obtener la lista de los platos que sean de menu
+    @GetMapping("pedidos/esMenu/{esMenu}")
+    public Integer getEsMenu(@PathVariable Boolean esMenu){
+        return pedidoRepository.findByEsMenu(esMenu);
+    }
 }

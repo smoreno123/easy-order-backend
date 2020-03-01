@@ -33,4 +33,9 @@ public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     @Query("select ip from Pedido pedido join pedido.itemPedidos ip group by ip order by count (ip) desc")
     List<ItemPedido> findByMasPedido();
 
+
+    //Obtener la lista de los platos que sean de menu
+    @Query(value = "SELECT COUNT(p.num_pedido) FROM pedido AS p WHERE p.es_menu = :esMenu", nativeQuery = true)
+    Integer findByEsMenu(@Param("esMenu")Boolean esMenu);
+
 }
