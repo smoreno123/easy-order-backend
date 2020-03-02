@@ -1,6 +1,8 @@
 package com.smoreno.easyorderbackend.web.rest;
 
+import com.smoreno.easyorderbackend.domain.Ingrediente;
 import com.smoreno.easyorderbackend.domain.ItemPedido;
+import com.smoreno.easyorderbackend.domain.TipoCocina;
 import com.smoreno.easyorderbackend.repository.ItemPedidoRepository;
 import com.smoreno.easyorderbackend.web.rest.errors.BadRequestAlertException;
 
@@ -21,6 +23,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * REST controller for managing {@link com.smoreno.easyorderbackend.domain.ItemPedido}.
@@ -165,6 +168,23 @@ public class ItemPedidoResource {
         itemPedidoList = itemPedidoRepository.findByTipoItemPedidos(tipoParam);
 
         return itemPedidoList;
+
+    }
+
+    @GetMapping("/item-pedidos/by-cuisine")
+    public List<ItemPedido> findByCuisine(@RequestParam("cocinaParam") String cocinaParam){
+        return itemPedidoRepository.findByTipoCocinas(cocinaParam);
+    }
+
+    @GetMapping("/item-pedidos/by-vegetarian")
+    public List<ItemPedido> findByVegetarian(){
+
+        return itemPedidoRepository.findByVegetarian()
+            .stream()
+            .filter(itemPedido ->
+                itemPedido.getIngredientes().stream()
+                    .allMatch(Ingrediente::isVegetariano))
+            .collect(Collectors.toList());
 
     }
 

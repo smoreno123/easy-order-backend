@@ -1,5 +1,6 @@
 package com.smoreno.easyorderbackend.repository;
 import com.smoreno.easyorderbackend.domain.ItemPedido;
+import com.smoreno.easyorderbackend.domain.TipoCocina;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
@@ -45,5 +46,13 @@ public interface ItemPedidoRepository extends JpaRepository<ItemPedido, Long> {
     //Obtener items de pedido por tipo (bebida, comida, primer plato...)
     @Query("select itemPedido from ItemPedido itemPedido join itemPedido.tipoItemPedidos tipoJoin where tipoJoin.nombreTipo like :tipoParam")
     List<ItemPedido>findByTipoItemPedidos(@Param("tipoParam")String tipoParam);
+
+    //Obtener platos por tipo de cocina
+    @Query(value = "SELECT itemPedido from ItemPedido itemPedido join itemPedido.tipoCocinas cocinaJoin where cocinaJoin.nombre like :cocinaParam")
+    List<ItemPedido>findByTipoCocinas(@Param("cocinaParam")String cocinaParam);
+
+    //Obtener platos vegetarianos
+    @Query("select ip from ItemPedido ip join ip.ingredientes ing where ing.vegetariano = true")
+    List<ItemPedido>findByVegetarian();
 
 }

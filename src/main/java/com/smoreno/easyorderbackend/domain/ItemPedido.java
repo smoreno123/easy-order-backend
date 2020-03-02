@@ -54,7 +54,7 @@ public class ItemPedido implements Serializable {
                inverseJoinColumns = @JoinColumn(name = "tipo_cocina_id", referencedColumnName = "id"))
     private Set<TipoCocina> tipoCocinas = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "item_pedido_ingrediente",
                joinColumns = @JoinColumn(name = "item_pedido_id", referencedColumnName = "id"),
