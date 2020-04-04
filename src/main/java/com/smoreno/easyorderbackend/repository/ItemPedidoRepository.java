@@ -55,4 +55,5 @@ public interface ItemPedidoRepository extends JpaRepository<ItemPedido, Long> {
     @Query("select ip from ItemPedido ip join ip.ingredientes ing where ing.vegetariano = true")
     List<ItemPedido>findByVegetarian();
 
+
 }

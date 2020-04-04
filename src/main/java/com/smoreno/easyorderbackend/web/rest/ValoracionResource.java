@@ -1,5 +1,6 @@
 package com.smoreno.easyorderbackend.web.rest;
 
+import com.smoreno.easyorderbackend.domain.ItemPedido;
 import com.smoreno.easyorderbackend.domain.Valoracion;
 import com.smoreno.easyorderbackend.repository.ValoracionRepository;
 import com.smoreno.easyorderbackend.web.rest.errors.BadRequestAlertException;
@@ -15,7 +16,10 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.time.ZonedDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -48,6 +52,7 @@ public class ValoracionResource {
     @PostMapping("/valoracions")
     public ResponseEntity<Valoracion> createValoracion(@RequestBody Valoracion valoracion) throws URISyntaxException {
         log.debug("REST request to save Valoracion : {}", valoracion);
+        valoracion.fecha(ZonedDateTime.now());
         if (valoracion.getId() != null) {
             throw new BadRequestAlertException("A new valoracion cannot already have an ID", ENTITY_NAME, "idexists");
         }
@@ -114,5 +119,10 @@ public class ValoracionResource {
         log.debug("REST request to delete Valoracion : {}", id);
         valoracionRepository.deleteById(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+    }
+
+    @GetMapping("/valoracions/betterValue")
+    public List<Object[]> betterValue(){
+        return valoracionRepository.findByBetterValue();
     }
 }
