@@ -52,8 +52,16 @@ public interface ItemPedidoRepository extends JpaRepository<ItemPedido, Long> {
     List<ItemPedido>findByTipoCocinas(@Param("cocinaParam")String cocinaParam);
 
     //Obtener platos vegetarianos
-    @Query("select ip from ItemPedido ip join ip.ingredientes ing where ing.vegetariano = true")
+    @Query("select ip from ItemPedido ip join ip.ingredientes ing where ing.vegetariano = true or ing.vegano = true")
     List<ItemPedido>findByVegetarian();
+
+    //Obtener los mas recientes (cuanto mas alta sea su id, mas reciente sera)
+    @Query("select ip from ItemPedido ip join ip.tipoItemPedidos tip where tip.nombreTipo like 'Primer plato' or tip.nombreTipo like 'Segundo plato' or tip.nombreTipo like 'Postre' order by ip.id desc")
+    List<ItemPedido>findAlliD(Pageable pageable);
+
+    //Obtener los plaros "fit", para ello se buscara por kcal (menos de 200 cal p.ej)
+    @Query("select ip from ItemPedido ip join ip.ingredientes ing group by ip having sum(ing.kcal) < 200")
+    List<ItemPedido>findByCalories();
 
 
 }

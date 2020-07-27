@@ -5,6 +5,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -36,6 +37,18 @@ public class ItemPedido implements Serializable {
 
     @Column(name = "precio", precision = 21, scale = 2)
     private BigDecimal precio;
+
+    @Column(name = "currentstock")
+    @Min(0)
+    private Integer stock;
+
+    @Column(name = "sugerencia")
+    private Boolean sugerencia;
+
+    @Column(name = "imageurl")
+    private String imageurl;
+
+
 
     @Column(name = "tiempo_preparacion")
     private Integer tiempoPreparacion;
@@ -325,6 +338,31 @@ public class ItemPedido implements Serializable {
         this.pedidos = pedidos;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
+
+    public Boolean getSugerencia() {
+        return sugerencia;
+    }
+
+    public void setSugerencia(Boolean sugerencia) {
+        this.sugerencia = sugerencia;
+    }
+
+    public String getImageURL() {
+        return imageurl;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageurl = imageURL;
+    }
 
     @Override
     public boolean equals(Object o) {

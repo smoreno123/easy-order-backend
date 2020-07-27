@@ -62,9 +62,15 @@ public class PedidoResource {
     @Transactional
     public ResponseEntity<Pedido> createPedido(@RequestBody Pedido pedido) throws URISyntaxException {
         //establecemos el menu del pedido a traves de la fecha en la que se ha realizado, siempre que no haya ningun menu puesto
-        if (pedido.getMenus().size()==0){
-            pedido.setMenus(menuRepository.findByFechaInicioBeforeAndFechaFinalAfter(pedido.getFechaPedido(), pedido.getFechaPedido()));
+        if(pedido.getEsMenu()){
+            if (pedido.getMenus().size()==0){
+                pedido.setMenus(menuRepository.findByFechaInicioBeforeAndFechaFinalAfter(pedido.getFechaPedido(), pedido.getFechaPedido()));
+            }
+            if(pedido.getNumPedido()==-1){
+                pedido.setNumPedido(null);
+            }
         }
+
 
         pedido.setMesa(null);
         log.debug("REST request to save Pedido : {}", pedido);

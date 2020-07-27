@@ -11,6 +11,8 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -186,6 +188,18 @@ public class ItemPedidoResource {
                     .allMatch(Ingrediente::isVegetariano))
             .collect(Collectors.toList());
 
+    }
+
+    @GetMapping("/item-pedido/by-recent")
+    public List<ItemPedido> findByRecent(){
+
+        Pageable top10 = PageRequest.of(0,10);
+        return itemPedidoRepository.findAlliD(top10);
+    }
+
+    @GetMapping("/item-pedido/by-calories")
+    public List<ItemPedido> findByCalories(){
+        return itemPedidoRepository.findByCalories();
     }
 
 }
