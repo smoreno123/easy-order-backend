@@ -3,6 +3,7 @@ package com.smoreno.easyorderbackend.web.rest;
 import com.smoreno.easyorderbackend.domain.ItemPedido;
 import com.smoreno.easyorderbackend.domain.Menu;
 import com.smoreno.easyorderbackend.domain.Pedido;
+import com.smoreno.easyorderbackend.repository.ItemPedidoRepository;
 import com.smoreno.easyorderbackend.repository.MenuRepository;
 import com.smoreno.easyorderbackend.repository.PedidoRepository;
 import com.smoreno.easyorderbackend.web.rest.errors.BadRequestAlertException;
@@ -44,11 +45,13 @@ public class PedidoResource {
 
     private final PedidoRepository pedidoRepository;
     private final MenuRepository menuRepository;
+    private final ItemPedidoRepository itemPedidoRepository;
 
 
-    public PedidoResource(PedidoRepository pedidoRepository, MenuRepository menuRepository) {
+    public PedidoResource(PedidoRepository pedidoRepository, MenuRepository menuRepository, ItemPedidoRepository itemPedidoRepository) {
         this.pedidoRepository = pedidoRepository;
         this.menuRepository = menuRepository;
+        this.itemPedidoRepository = itemPedidoRepository;
     }
 
     /**
@@ -77,6 +80,11 @@ public class PedidoResource {
         if (pedido.getId() != null) {
             throw new BadRequestAlertException("A new pedido cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        for (int i = 0; i < pedido.getItemPedidos().size(); i++) {
+            pedido.getItemPedidos().get(i).setStock(pedido.getItemPedidos().get(i).getStock()-1);
+            ItemPedido itemPedido = itemPedidoRepository.save(pedido.getItemPedidos().get(i));
+        }
+
         Pedido result = pedidoRepository.save(pedido);
         return ResponseEntity.created(new URI("/api/pedidos/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))

@@ -2,6 +2,7 @@ package com.smoreno.easyorderbackend.web.rest;
 
 import com.smoreno.easyorderbackend.domain.ItemPedido;
 import com.smoreno.easyorderbackend.domain.Valoracion;
+import com.smoreno.easyorderbackend.domain.ValoracionMedia;
 import com.smoreno.easyorderbackend.repository.ValoracionRepository;
 import com.smoreno.easyorderbackend.web.rest.errors.BadRequestAlertException;
 
@@ -16,11 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.sql.Array;
 import java.time.ZonedDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * REST controller for managing {@link com.smoreno.easyorderbackend.domain.Valoracion}.
@@ -122,7 +121,17 @@ public class ValoracionResource {
     }
 
     @GetMapping("/valoracions/betterValue")
-    public List<Object[]> betterValue(){
-        return valoracionRepository.findByBetterValue();
+    public List<ValoracionMedia> betterValue(){
+        return getValoracionData();
+    }
+    public List<ValoracionMedia> getValoracionData(){
+        List<Object[]> res = valoracionRepository.findByBetterValue();
+        List<ValoracionMedia> finalList= new ArrayList<>();
+
+        for (Object[] o:res ) {
+            ValoracionMedia valoracionMedia = new ValoracionMedia((ItemPedido) o[0],(double)o[1]);
+            finalList.add(valoracionMedia);
+        }
+        return finalList;
     }
 }

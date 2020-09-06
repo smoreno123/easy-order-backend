@@ -115,4 +115,10 @@ public class TipoItemPedidoResource {
         tipoItemPedidoRepository.deleteById(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
+
+    @GetMapping("/tipo-item-pedidos/types")
+    public List<TipoItemPedido> getTypes(){
+        return tipoItemPedidoRepository.findAllByNombreTipo();
+    }
+
 }

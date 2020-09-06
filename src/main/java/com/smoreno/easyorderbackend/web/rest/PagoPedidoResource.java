@@ -115,4 +115,19 @@ public class PagoPedidoResource {
         pagoPedidoRepository.deleteById(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
+
+    @GetMapping("/pago-pedidos/countComensal")
+    public double countComensal(@RequestParam("param") String param){
+        int count= pagoPedidoRepository.countByDni(param);
+
+        switch (count){
+            case 5:
+                return 0.95;
+            case 10:
+                return 0.90;
+
+                default:
+                    return 1;
+        }
+    }
 }

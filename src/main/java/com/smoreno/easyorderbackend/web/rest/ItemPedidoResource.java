@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -178,15 +179,31 @@ public class ItemPedidoResource {
         return itemPedidoRepository.findByTipoCocinas(cocinaParam);
     }
 
-    @GetMapping("/item-pedidos/by-vegetarian")
-    public List<ItemPedido> findByVegetarian(){
+    @GetMapping("/item-pedidos/by-vegan")
+    public List<ItemPedido> findByVegan(){
 
-        return itemPedidoRepository.findByVegetarian()
+        List<ItemPedido> res = itemPedidoRepository.findByVegan()
             .stream()
             .filter(itemPedido ->
                 itemPedido.getIngredientes().stream()
-                    .allMatch(Ingrediente::isVegetariano))
+                    .allMatch(Ingrediente::isVegano))
             .collect(Collectors.toList());
+
+        int coincidencias=0;
+        for (int i = 0; i <res.size() ; i++) {
+            for (int j = 0; j <res.size() ; j++) {
+                if (res.get(i).getId().equals(res.get(j).getId())){
+                    coincidencias++;
+                    if (coincidencias==2){
+                        res.remove(res.get(i));
+                        coincidencias=0;
+                        i=0;
+                    }
+                }
+            }
+            coincidencias=0;
+        }
+        return res;
 
     }
 
@@ -200,6 +217,17 @@ public class ItemPedidoResource {
     @GetMapping("/item-pedido/by-calories")
     public List<ItemPedido> findByCalories(){
         return itemPedidoRepository.findByCalories();
+    }
+
+    @GetMapping("/item-pedido/sugerencia")
+    public List<ItemPedido>findBySugerencia(){
+        return itemPedidoRepository.findBySugerencia();
+    }
+
+    //Devolver los items de un menu concreto
+    @GetMapping("/item-pedido/by-menu-name")
+    public List<ItemPedido>findByMenuName(@RequestParam("param")Long param){
+        return itemPedidoRepository.findByMenuName(param);
     }
 
 }

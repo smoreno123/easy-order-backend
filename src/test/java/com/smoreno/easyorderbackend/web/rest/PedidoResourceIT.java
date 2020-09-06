@@ -2,6 +2,7 @@ package com.smoreno.easyorderbackend.web.rest;
 
 import com.smoreno.easyorderbackend.EasyorderBackendApp;
 import com.smoreno.easyorderbackend.domain.Pedido;
+import com.smoreno.easyorderbackend.repository.ItemPedidoRepository;
 import com.smoreno.easyorderbackend.repository.MenuRepository;
 import com.smoreno.easyorderbackend.repository.PedidoRepository;
 import com.smoreno.easyorderbackend.web.rest.errors.ExceptionTranslator;
@@ -73,6 +74,13 @@ public class PedidoResourceIT {
     private MenuRepository menuRepositoryMock;
 
     @Autowired
+    @Qualifier("itemPedidoRepository")
+    private ItemPedidoRepository itemPedidoRepository;
+
+    @Mock
+    private ItemPedidoRepository itemPedidoRepositoryMock;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -95,7 +103,7 @@ public class PedidoResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final PedidoResource pedidoResource = new PedidoResource(pedidoRepository, menuRepository);
+        final PedidoResource pedidoResource = new PedidoResource(pedidoRepository, menuRepository, itemPedidoRepository);
         this.restPedidoMockMvc = MockMvcBuilders.standaloneSetup(pedidoResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -198,7 +206,7 @@ public class PedidoResourceIT {
     
     @SuppressWarnings({"unchecked"})
     public void getAllPedidosWithEagerRelationshipsIsEnabled() throws Exception {
-        PedidoResource pedidoResource = new PedidoResource(pedidoRepositoryMock, menuRepository);
+        PedidoResource pedidoResource = new PedidoResource(pedidoRepositoryMock, menuRepository, itemPedidoRepository);
         when(pedidoRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         MockMvc restPedidoMockMvc = MockMvcBuilders.standaloneSetup(pedidoResource)
@@ -215,7 +223,7 @@ public class PedidoResourceIT {
 
     @SuppressWarnings({"unchecked"})
     public void getAllPedidosWithEagerRelationshipsIsNotEnabled() throws Exception {
-        PedidoResource pedidoResource = new PedidoResource(pedidoRepositoryMock, menuRepositoryMock);
+        PedidoResource pedidoResource = new PedidoResource(pedidoRepositoryMock, menuRepositoryMock, itemPedidoRepositoryMock);
             when(pedidoRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
             MockMvc restPedidoMockMvc = MockMvcBuilders.standaloneSetup(pedidoResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)

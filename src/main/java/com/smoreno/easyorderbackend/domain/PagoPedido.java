@@ -28,7 +28,7 @@ public class PagoPedido implements Serializable {
     @JsonIgnoreProperties("pagos")
     private Pedido pedido;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JsonIgnoreProperties("pagos")
     private Comensal comensal;
 

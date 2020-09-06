@@ -53,7 +53,7 @@ public class ItemPedido implements Serializable {
     @Column(name = "tiempo_preparacion")
     private Integer tiempoPreparacion;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "item_pedido_tipo_item_pedido",
                joinColumns = @JoinColumn(name = "item_pedido_id", referencedColumnName = "id"),
